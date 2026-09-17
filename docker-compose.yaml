@@ -7,16 +7,20 @@ services:
     tty: true
     
     # ローカルのsrcディレクトリをコンテナ内にマウント
-    volumes:
-      - ./src:/ros2_ws/src
-      # - /dev:/dev # LiDARやマイコン等(USBシリアル通信など)を使う場合はマウントする
-      
     # ホスト側のネットワークをそのまま使い、他のROS 2ノード（マイコン側など）と通信しやすくする
     network_mode: host
+    ipc: host
     
+    # ローカルのsrcディレクトリやGUI表示用ソケットをコンテナ内にマウント
+    volumes:
+      - ./src:/ros2_ws/src
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
+      # - /dev:/dev # LiDARやマイコン等(USBシリアル通信など)を使う場合はマウントする
+      
     # RVizなどのGUIアプリケーションをホスト側の画面に表示するための設定 (Linux環境向け)
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY:-:0}
       - QT_X11_NO_MITSHM=1
-    # volumes:
-    #   - /tmp/.X11-unix:/tmp/.X11-unix:rw # GUI表示用のソケット共有
+      - XAUTHORITY=/root/.Xauthority
+
