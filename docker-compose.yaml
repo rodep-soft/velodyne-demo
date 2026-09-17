@@ -1,3 +1,22 @@
 services:
-  ros2_velodyne_demo:
-
+  ros2-lyrical:
+    build: .
+    container_name: lyrical_dev_env
+    # コンテナを起動したままにする設定
+    stdin_open: true 
+    tty: true
+    
+    # ローカルのsrcディレクトリをコンテナ内にマウント
+    volumes:
+      - ./src:/ros2_ws/src
+      # - /dev:/dev # LiDARやマイコン等(USBシリアル通信など)を使う場合はマウントする
+      
+    # ホスト側のネットワークをそのまま使い、他のROS 2ノード（マイコン側など）と通信しやすくする
+    network_mode: host
+    
+    # RVizなどのGUIアプリケーションをホスト側の画面に表示するための設定 (Linux環境向け)
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    # volumes:
+    #   - /tmp/.X11-unix:/tmp/.X11-unix:rw # GUI表示用のソケット共有
