@@ -12,6 +12,11 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git \
     vim \
+    tmux \
+    ros-lyrical-foxglove-bridge \
+    #ros-lyrical-velodyne-driver \
+    ros-lyrical-diagnostic-updater \
+    libpcap-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # ROS 2ワークスペースの作成

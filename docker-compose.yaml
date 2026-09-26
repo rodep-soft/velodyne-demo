@@ -13,7 +13,7 @@ services:
     
     # ローカルのsrcディレクトリやGUI表示用ソケットをコンテナ内にマウント
     volumes:
-      - ./src:/ros2_ws/src
+      - ./ros2_ws/src:/ros2_ws/src
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority:ro
       # - /dev:/dev # LiDARやマイコン等(USBシリアル通信など)を使う場合はマウントする

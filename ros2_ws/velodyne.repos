@@ -1,0 +1,5 @@
+repositories:
+  velodyne:
+    type: git
+    url: git@github.com:CyaNabe/velodyne.git
+    version: ros2
